@@ -24,6 +24,7 @@
 
 .grid-2-akun{
     display: grid;
-    grid-template-columns: 32.5% 66.5%;
+    grid-template-columns: 35.5% 63.5%;
     grid-gap: 1%;
+    margin-bottom: 20px;
 }

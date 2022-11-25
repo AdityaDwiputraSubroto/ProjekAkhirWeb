@@ -51,45 +51,36 @@ $data_badan = $query->fetch_assoc();
 
         <div class="container-border-gray m-auto container-pad-20">
             <div class="underline">
-                <div>Update</div>
+                <div>Tambah Makanan</div>
             </div>
-            <form action="../proses/update_badan_proses.php" method="POST">
+            <form action="../proses/tambah_makanan_proses.php" method="POST">
                 <table class="table-akun-desc-edit m-top-20px">
                     <tr>
                         <td>
-                            Tinggi (cm)
+                            <div class="label">Makanan</div>
                         </td>
                         <td>:</td>
                         <td>
-                            <input class="input m-top-10px" type="number" name="tinggi" placeholder="Masukkan tinggi badan" value="<?php echo $data_badan['tinggi']; ?>" required>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            Berat (kg)
-                        </td>
-                        <td>:</td>
-                        <td>
-                            <input class="input m-top-10px" type="number" name="berat" placeholder="Masukkan berat badan" value="<?php echo $data_badan['berat']; ?>" required>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="label">Aktivitas</div>
-                        </td>
-                        <td>:</td>
-                        <td>
-                            <select name="exercise" id="exercise" class="input m-top-10px">
+                            <select name="makanan" id="makanan" class="input m-top-10px">
                                 <?php
                                 include '../proses/connect.php';
-                                $sql = "SELECT * FROM exercise";
+                                $sql = "SELECT * FROM makanan";
                                 $result = $connect->query($sql);
                                 while ($data = $result->fetch_assoc()) { ?>
-                                    <option class="select" value="<?php echo $data['id_exercise']; ?>"><?php echo $data['aktivitas']; ?></option>
+                                    <option class="select" value="<?php echo $data['id_makanan']; ?>"><?php echo $data['nama'] . " " . $data['ukuran']; ?></option>
 
                                 <?php } ?>
                             </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Jumlah
+                        </td>
+                        <td>:</td>
+                        <td>
+                            <input class="input m-top-10px" type="number" name="jumlah" placeholder="Masukkan jumlah" value="0" required>
                         </td>
                     </tr>
 
@@ -97,7 +88,7 @@ $data_badan = $query->fetch_assoc();
                 <br>
                 <div>
                     <center>
-                        <input type="submit" name="submit" class="button-akun button-akun-edit" value="Update">
+                        <input type="submit" name="submit" class="button-akun button-akun-edit" value="Tambah">
                     </center>
                 </div>
             </form>

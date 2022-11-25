@@ -32,3 +32,8 @@
 .title{
     font-size: 22px;
 }
+
+.date{
+    font-size: 15px;
+    color: rgba(0, 0, 0, 0.61);
+}

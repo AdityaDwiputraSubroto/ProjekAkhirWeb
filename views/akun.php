@@ -6,6 +6,7 @@ if (empty($_SESSION['id_user'])) {
 
 include '../proses/connect.php';
 $id_user = $_SESSION['id_user'];
+$gender = $_SESSION['gender'];
 
 $sql = "SELECT * FROM user INNER jOIN badan ON user.id_user = badan.id_user INNER JOIN exercise ON badan.id_exercise = exercise.id_exercise WHERE badan.id_user = $id_user AND badan.status = 'active';";
 $query = $connect->query($sql);
@@ -13,10 +14,24 @@ $data_badan = $query->fetch_assoc();
 
 //mencari umur
 $dateOfBirth = $data_badan['tanggal_lahir'];
-$today = date("Y-m-d");
+$today = date("d-m-Y");
 $age = date_diff(date_create($dateOfBirth), date_create($today));
 
-$bmi = $data_badan['berat'] / $data_badan['tinggi'] / 100;
+
+$usia = (int)$age->format('%y');
+$tinggi = $data_badan['tinggi'] / 100;
+$berat = $data_badan['berat'];
+$bmi = $berat / ($tinggi * $tinggi);
+$bmi = number_format($bmi, 2);
+
+if ($gender == 'Male') {
+    $bmr = 66.5 + (13.7 * $berat) + (5 * $tinggi) - (6.8 * $usia);
+} else {
+    $bmr = 655 + (9.6 * $berat) + (1.8 * $tinggi) - (4.7 * $usia);
+}
+
+$tdee = $bmr * $data_badan['poin'];
+$tdee = number_format($tdee, 0);
 
 
 ?>
@@ -93,7 +108,7 @@ $bmi = $data_badan['berat'] / $data_badan['tinggi'] / 100;
                                 </td>
                                 <td>:</td>
                                 <td>
-                                    <?php echo $age->format('%y'); ?>
+                                    <?php echo $age->format('%y tahun'); ?>
                                 </td>
                             </tr>
 
@@ -127,17 +142,49 @@ $bmi = $data_badan['berat'] / $data_badan['tinggi'] / 100;
                                 </td>
                             </tr>
 
+                            <tr>
+                                <td>
+                                    BMI
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <?php echo $bmi . " ";
+                                    if ($bmi >= 16 && $bmi < 18.5) {
+                                        echo "(Berat badan kurang)";
+                                    } else if ($bmi < 16) {
+                                        echo "(Berat badan kurang berat)";
+                                    } else if ($bmi >= 18.5 && $bmi < 25) {
+                                        echo "(Berat badan normal)";
+                                    } else if ($bmi >= 25 && $bmi < 30) {
+                                        echo "(Berat badan berlebih)";
+                                    } else if ($bmi >= 30) {
+                                        echo "(Obesitas)";
+                                    } ?>
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    TDEE
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <?php echo $tdee . " kalori"; ?>
+                                </td>
+                            </tr>
+
                         </table>
                         <br>
                         <a href="update_badan.php"><button class="button-akun">Update</button></a>
-                        <a href="../proses/logout.php"><button class="button-akun">Logout</button></a>
+
                     </div>
 
                 </div>
                 <div>
                     <a href="">
                         <div class="container-menu-akun">
-                            Hari ini
+                            Makanan hari ini
                         </div>
                     </a>
                     <a href="">
@@ -154,9 +201,30 @@ $bmi = $data_badan['berat'] / $data_badan['tinggi'] / 100;
 
             </div>
             <div class="container-border-gray container-pad-20">
-                <div class="underline title">Hari ini</div>
+                <div class="underline title">Makanan hari ini <br> <span class="date"><?php echo $today; ?></span></div>
                 <div>
+                    <div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Makanan</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Mark</td>
+                                    <td>Otto</td>
+                                    <td> <a href="delete_makanan.php"><button class="button-akun">Delete</button></a></td>
+                                </tr>
 
+                            </tbody>
+                        </table>
+                        <a href="tambah_makanan.php"><button class="button-akun">Tambah Makanan</button></a>
+                    </div>
                 </div>
             </div>
         </div>
