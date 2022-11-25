@@ -1,0 +1,29 @@
+.grid-3 {
+    display: grid;
+    grid-template-columns: 30% 30% 30%;
+    grid-gap: 5%;
+    
+}
+
+.grid-2{
+    display: grid;
+    grid-template-columns: 40% 60%;
+}
+
+.grid-2-even{
+    display: grid;
+    grid-template-columns: 40% 40%;
+    grid-gap: 20%;
+}
+
+.grid-bar-bmi{
+    display: grid;
+    grid-template-columns: 40% 6.25% 16.25% 12.5% 25%;
+
+}
+
+.grid-2-akun{
+    display: grid;
+    grid-template-columns: 32.5% 66.5%;
+    grid-gap: 1%;
+}

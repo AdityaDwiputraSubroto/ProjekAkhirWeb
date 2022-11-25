@@ -1,0 +1,72 @@
+a{
+    text-decoration: none;
+}
+
+.input{
+    width: 100%;
+    box-sizing: border-box;
+    border-style: solid;
+    padding-left: 10px;
+    height: 35px;
+    border-radius: 5px;
+    margin-bottom: 7px;
+    font-size: 15px;
+    background-color: rgb(255, 255, 255);
+    border-color: rgba(26, 0, 0, 0.664);
+}
+
+.button{
+    font-weight: bold;
+}
+
+.button-red{
+    background-color: #e63946;
+    color: #f1faee;
+    cursor: pointer;
+    border-color: #e63946;
+}
+
+.button-red:hover{
+    background-color: #f1faee;
+    color: #e63946;
+    transition: 0.1s;
+}
+
+select{
+    border: 2px;
+    border-color: rgba(26, 0, 0, 0.664);
+}
+
+.label{
+    text-align: start;
+    font-weight:100;
+}
+
+.button-search{
+    width: 80px;
+    text-align: center;
+    padding: 0;
+}
+
+.button-akun{
+    border-radius: 20px;
+    background-color: #f1faee00;
+    border-style: solid;
+    border-color: rgba(31, 31, 31, 0.671);
+    padding: 0 10px;
+    color: rgba(31, 31, 31, 0.671);
+    font-size: 15px;
+    transition: 0.2s;
+}
+
+.button-akun:hover{
+    background-color: rgba(31, 31, 31, 0.39);
+    color: #f1faee;
+    border-color: #f1faee00;
+
+}
+
+.button-akun-edit{
+    width: 200px;
+    
+}
