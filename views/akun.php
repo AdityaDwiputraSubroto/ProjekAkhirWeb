@@ -8,7 +8,7 @@ include '../proses/connect.php';
 $id_user = $_SESSION['id_user'];
 $gender = $_SESSION['gender'];
 
-$sql = "SELECT * FROM user INNER jOIN badan ON user.id_user = badan.id_user INNER JOIN exercise ON badan.id_exercise = exercise.id_exercise WHERE badan.id_user = $id_user AND badan.status = 'active';";
+$sql = "SELECT * FROM user INNER jOIN badan ON user.id_user = badan.id_user INNER JOIN exercise ON badan.id_exercise = exercise.id_exercise WHERE badan.id_user = $id_user AND badan.status = 'active' AND badan.id_exercise = exercise.id_exercise;";
 $query = $connect->query($sql);
 $data_badan = $query->fetch_assoc();
 
@@ -16,22 +16,33 @@ $data_badan = $query->fetch_assoc();
 $dateOfBirth = $data_badan['tanggal_lahir'];
 $today = date("d-m-Y");
 $age = date_diff(date_create($dateOfBirth), date_create($today));
-
-
 $usia = (int)$age->format('%y');
-$tinggi = $data_badan['tinggi'] / 100;
-$berat = $data_badan['berat'];
-$bmi = $berat / ($tinggi * $tinggi);
-$bmi = number_format($bmi, 2);
 
-if ($gender == 'Male') {
-    $bmr = 66.5 + (13.7 * $berat) + (5 * $tinggi) - (6.8 * $usia);
+$berat = $data_badan['berat'];
+$tinggi = $data_badan['tinggi'];
+$bmi = $data_badan['bmi'];
+
+$currentDate = date("Y/m/d");
+$id_badan = $data_badan['id_badan'];
+//cek apakah sudah buat riwayat hari ini
+$sql = "SELECT * FROM user INNER JOIN badan ON user.id_user = badan.id_user INNER JOIN riwayat_harian ON badan.id_badan = riwayat_harian.id_badan WHERE badan.status = 'active' AND user.id_user = $id_user AND riwayat_harian.date_riwayat = '$currentDate' AND riwayat_harian.id_badan = $id_badan";
+$query = $connect->query($sql);
+$cek = mysqli_num_rows($query);
+$data_riwayat = $query->fetch_assoc();
+
+//jika belum buat riwayat maka buat riwayat
+if ($cek == 0) {
+    $sql = "INSERT INTO riwayat_harian (id_badan, date_riwayat, kalori_makanan) VALUES ($id_badan, '$currentDate',0)";
+    $query = $connect->query($sql);
+    if ($query) {
+        $id_riwayat = $connect->insert_id;
+        $_SESSION['id_riwayat'] = $id_riwayat;
+    }
 } else {
-    $bmr = 655 + (9.6 * $berat) + (1.8 * $tinggi) - (4.7 * $usia);
+    $id_riwayat = $data_riwayat['id_riwayat'];
 }
 
-$tdee = $bmr * $data_badan['poin'];
-$tdee = number_format($tdee, 0);
+
 
 
 ?>
@@ -81,7 +92,7 @@ $tdee = number_format($tdee, 0);
                                                                         echo "https://cdn-icons-png.flaticon.com/128/727/727393.png";
                                                                     } ?>" alt="">
                         <?php echo $_SESSION['username'] ?>
-                        <a href="edit_profile.php"><img class="icon-profile" src="https://cdn-icons-png.flaticon.com/128/2356/2356780.png" alt=""></a>
+
 
                         <table class="table-akun-desc v-align-top m-top-20px">
                             <tr>
@@ -170,7 +181,7 @@ $tdee = number_format($tdee, 0);
                                 </td>
                                 <td>:</td>
                                 <td>
-                                    <?php echo $tdee . " kalori"; ?>
+                                    <?php echo $data_badan['tdee'] . " kalori"; ?>
                                 </td>
                             </tr>
 
@@ -182,17 +193,17 @@ $tdee = number_format($tdee, 0);
 
                 </div>
                 <div>
-                    <a href="">
+                    <a href="akun.php">
                         <div class="container-menu-akun">
                             Makanan hari ini
                         </div>
                     </a>
-                    <a href="">
+                    <a href="akun.php?page=riwayat">
                         <div class="container-menu-akun">
                             Riwayat
                         </div>
                     </a>
-                    <a href="">
+                    <a href="../proses/logout.php">
                         <div class="container-menu-akun">
                             Logout
                         </div>
@@ -201,31 +212,15 @@ $tdee = number_format($tdee, 0);
 
             </div>
             <div class="container-border-gray container-pad-20">
-                <div class="underline title">Makanan hari ini <br> <span class="date"><?php echo $today; ?></span></div>
-                <div>
-                    <div>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Makanan</th>
-                                    <th scope="col">Quantity</th>
-                                    <th scope="col"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td> <a href="delete_makanan.php"><button class="button-akun">Delete</button></a></td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                        <a href="tambah_makanan.php"><button class="button-akun">Tambah Makanan</button></a>
-                    </div>
-                </div>
+                <?php
+                if (empty($_GET['page'])) {
+                    include 'hari_ini.php';
+                } else {
+                    if ($_GET['page'] == 'riwayat') {
+                        include 'riwayat_harian.php';
+                    }
+                }
+                ?>
             </div>
         </div>
 

@@ -4,12 +4,6 @@ if (empty($_SESSION['id_user'])) {
     header("location:loginpage.php?pesan=belum_login");
 }
 
-include '../proses/connect.php';
-$id_user = $_SESSION['id_user'];
-
-$sql = "SELECT * FROM user INNER jOIN badan ON user.id_user = badan.id_user WHERE badan.id_user = $id_user AND badan.status = 'active';";
-$query = $connect->query($sql);
-$data_badan = $query->fetch_assoc();
 
 ?>
 <!DOCTYPE html>
@@ -19,7 +13,7 @@ $data_badan = $query->fetch_assoc();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TDEE</title>
+    <title>Tambah Makanan</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
@@ -54,6 +48,7 @@ $data_badan = $query->fetch_assoc();
                 <div>Tambah Makanan</div>
             </div>
             <form action="../proses/tambah_makanan_proses.php" method="POST">
+                <input type="hidden" name="id_riwayat" value="<?php echo $_GET['id']; ?>">
                 <table class="table-akun-desc-edit m-top-20px">
                     <tr>
                         <td>
@@ -67,7 +62,7 @@ $data_badan = $query->fetch_assoc();
                                 $sql = "SELECT * FROM makanan";
                                 $result = $connect->query($sql);
                                 while ($data = $result->fetch_assoc()) { ?>
-                                    <option class="select" value="<?php echo $data['id_makanan']; ?>"><?php echo $data['nama'] . " " . $data['ukuran']; ?></option>
+                                    <option class="select" value="<?php echo $data['id_makanan']; ?>"><?php echo $data['nama_makanan'] . " " . $data['ukuran']; ?></option>
 
                                 <?php } ?>
                             </select>
@@ -80,7 +75,7 @@ $data_badan = $query->fetch_assoc();
                         </td>
                         <td>:</td>
                         <td>
-                            <input class="input m-top-10px" type="number" name="jumlah" placeholder="Masukkan jumlah" value="0" required>
+                            <input class="input m-top-10px" type="number" name="jumlah" placeholder="Masukkan jumlah" required>
                         </td>
                     </tr>
 

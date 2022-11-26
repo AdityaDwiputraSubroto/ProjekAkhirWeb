@@ -48,18 +48,17 @@ session_start();
                 </p>
             </div>
             <div class="container-auth width-max clear-border-left clear-shadow">
-                <h1>Hitung Kalori</h1>
+                <h1>Hitung Kalori</h1><br><br>
                 <div>
                     <form action="../proses/tdee_proses.php" method="POST">
                         <table class="table-auth">
                             <tr>
                                 <td>
-                                    <input class="input m-top-10px" type="text" name="berat" placeholder="Masukkan makanan" required>
+                                    <input type="checkbox" id="makanan" name="makanan" value="2" class="mid-checkbox">
+                                    <label for="vehicle1"> Ayam goreng (86gr/porsi)</label><br>
                                 </td>
                                 <td>
-                                    <a href="makananpage.php?search=ayam">
-                                        <button class="input button button-red button-search m-top-10px">Cari</button>
-                                    </a>
+                                    <input type="number" value="jumlah" placeholder="Jumlah">
                                 </td>
                             </tr>
                             <tr>

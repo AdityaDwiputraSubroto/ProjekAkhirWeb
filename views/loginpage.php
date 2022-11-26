@@ -47,7 +47,7 @@ session_start();
                     } else if ($_GET['pesan'] == 'logout') {
                         echo "Anda Telah Berhasil Logout";
                     } else if ($_GET['pesan'] == 'belum_login') {
-                        echo "Belum Login";
+                        echo "Silahkan Login Terlebih Dahulu";
                     } else if ($_GET['pesan'] == 'daftar-berhasil') {
                         echo "Daftar Berhasil";
                     }
