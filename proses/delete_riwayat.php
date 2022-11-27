@@ -18,4 +18,6 @@ if ($query) {
     } else {
         header("Location:../views/akun.php?page=riwayat");
     }
+} else {
+    header("Location:../views/akun.php?page=riwayat");
 }

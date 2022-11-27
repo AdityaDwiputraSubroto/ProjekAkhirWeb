@@ -5,25 +5,25 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+
                     <th scope="col">Tanggal</th>
                     <th scope="col">BMI</th>
-                    <th scope="col">Kondisi Berat Badan</th>
+                    <th scope="col">Berat Badan</th>
                     <th scope="col">TDEE</th>
                     <th scope="col">Kalori Makanan</th>
-                    <th scope="col"></th>
+                    <th scope="col" colspan="2"></th>
+
                 </tr>
             </thead>
             <tbody>
                 <?php
-                $sql = "SELECT * FROM riwayat_harian INNER JOIN badan ON riwayat_harian.id_badan = badan.id_badan INNER JOIN exercise ON exercise.id_exercise = badan.id_exercise WHERE badan.id_user = $id_user;";
+                $sql = "SELECT * FROM riwayat_harian INNER JOIN badan ON riwayat_harian.id_badan = badan.id_badan INNER JOIN exercise ON exercise.id_exercise = badan.id_exercise WHERE badan.id_user = $id_user ORDER BY date_riwayat DESC;";
                 $query = $connect->query($sql);
-                $i = 1;
+
                 while ($data_history = $query->fetch_assoc()) {
                 ?>
                     <tr>
-                        <th scope="row"><?php echo $i;
-                                        $i++; ?></th>
+
                         <td><?php echo $data_history['date_riwayat']; ?></td>
                         <td><?php echo $data_history['bmi'];
                             ?></td>
@@ -41,6 +41,7 @@
                             }; ?></td>
                         <td><?php echo $data_history['tdee']; ?></td>
                         <td><?php echo $data_history['kalori_makanan']; ?></td>
+                        <td> <a href="akun.php?page=detail&id=<?php echo $data_history['id_riwayat']; ?>"><button class="button-akun-blue">Detail</button></a></td>
                         <td> <a href="../proses/delete_riwayat.php?id=<?php echo $data_history['id_riwayat']; ?>"><button class="button-akun">Delete</button></a></td>
                     </tr>
                 <?php } ?>

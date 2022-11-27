@@ -43,7 +43,7 @@ session_start();
                 <?php
                 if (isset($_GET['pesan'])) {
                     if ($_GET['pesan'] == "akun-double") {
-                        echo "Akun telah ada";
+                        echo "Email dan Password Sudah Terpakai ";
                     } else if ($_GET['pesan'] == 'daftar-gagal') {
                         echo "Daftar Gagal";
                     }

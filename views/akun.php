@@ -37,6 +37,7 @@ if ($cek == 0) {
     if ($query) {
         $id_riwayat = $connect->insert_id;
         $_SESSION['id_riwayat'] = $id_riwayat;
+        header("Location:akun.php");
     }
 } else {
     $id_riwayat = $data_riwayat['id_riwayat'];
@@ -188,7 +189,6 @@ if ($cek == 0) {
                         </table>
                         <br>
                         <a href="update_badan.php"><button class="button-akun">Update</button></a>
-
                     </div>
 
                 </div>
@@ -218,6 +218,8 @@ if ($cek == 0) {
                 } else {
                     if ($_GET['page'] == 'riwayat') {
                         include 'riwayat_harian.php';
+                    } else if ($_GET['page'] == 'detail') {
+                        include 'detail_riwayat.php';
                     }
                 }
                 ?>

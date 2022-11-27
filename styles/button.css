@@ -66,6 +66,24 @@ select{
 
 }
 
+.button-akun-blue{
+    border-radius: 20px;
+    background-color: white;
+    border-style: solid;
+    border-color: #2e6dcc;
+    padding: 0 10px;
+    color: #2e6dcc;
+    font-size: 15px;
+    transition: 0.2s;
+}
+
+.button-akun-blue:hover{
+    background-color: #2e6dcc;
+    color: white;
+    border-color: #2e6dcc;
+
+}
+
 .button-akun-edit{
     width: 200px;
     
