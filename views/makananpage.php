@@ -48,22 +48,45 @@ session_start();
                 </p>
             </div>
             <div class="container-auth width-max clear-border-left clear-shadow">
-                <h1>Hitung Kalori</h1><br><br>
+                <h1>Hitung Kalori</h1><br>
+                <?php
+                if (isset($_GET['kalori'])) { ?>
+                    <h2>Kalori : <?php echo $_GET['kalori']; ?></h2>
+                <?php }
+                ?>
                 <div>
-                    <form action="../proses/tdee_proses.php" method="POST">
+                    <form action="../proses/makanan_proses.php" method="POST">
                         <table class="table-auth">
                             <tr>
                                 <td>
-                                    <input type="checkbox" id="makanan" name="makanan" value="2" class="mid-checkbox">
-                                    <label for="vehicle1"> Ayam goreng (86gr/porsi)</label><br>
+                                    <select name="makanan" id="makanan" class="input m-top-10px">
+                                        <?php
+                                        include '../proses/connect.php';
+                                        $sql = "SELECT * FROM makanan";
+                                        $result = $connect->query($sql);
+                                        while ($data = $result->fetch_assoc()) { ?>
+                                            <option class="select" value="<?php echo $data['id_makanan']; ?>" <?php
+                                                                                                                if (isset($_GET['id_makanan'])) {
+                                                                                                                    if ($_GET['id_makanan'] == $data['id_makanan']) {
+                                                                                                                        echo "selected";
+                                                                                                                    }
+                                                                                                                }
+                                                                                                                ?>><?php echo $data['nama_makanan'] . " " . $data['ukuran']; ?></option>
+
+                                        <?php } ?>
+                                    </select>
                                 </td>
                                 <td>
-                                    <input type="number" value="jumlah" placeholder="Jumlah">
+                                    <input type="number" name="jumlah" value="<?php
+                                                                                if (isset($_GET['jumlah'])) {
+                                                                                    echo $_GET['jumlah'];
+                                                                                }
+                                                                                ?>" placeholder="Jumlah" required>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <input class="input button button-red m-top-10px" type="submit" name="bmi" value="Hitung TDEE">
+                                    <input class="input button button-red m-top-10px" type="submit" name="bmi" value="HITUNG KALORI">
                                 </td>
                             </tr>
 
